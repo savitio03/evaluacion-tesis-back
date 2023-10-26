@@ -1,19 +1,16 @@
-package usuarios.services.impl;
+package com.unisinu.evaluaciontesis.usuarios.services.impl;
 
-import compartidos.ResultadoDTO;
+import com.unisinu.evaluaciontesis.compartidos.ResultadoDTO;
+import com.unisinu.evaluaciontesis.usuarios.models.dto.UsuarioDTO;
+import com.unisinu.evaluaciontesis.usuarios.models.entidades.Usuario;
+import com.unisinu.evaluaciontesis.usuarios.repository.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import usuarios.models.dto.UsuarioDTO;
-import usuarios.models.entidades.Usuario;
-import usuarios.models.mappers.UsuarioMapper;
-import usuarios.repository.IUsuarioRepository;
-import usuarios.services.IUsuarioService;
+import com.unisinu.evaluaciontesis.usuarios.services.IUsuarioService;
 
 @Service
 public class UsuarioService implements IUsuarioService {
 
-    @Autowired
-    UsuarioMapper usuarioMapper;
 
     @Autowired
     IUsuarioRepository usuarioRepository;
@@ -23,11 +20,11 @@ public class UsuarioService implements IUsuarioService {
     public ResultadoDTO guardarUsuario(UsuarioDTO usuarioDTO) {
         ResultadoDTO resultadoDTO = new ResultadoDTO();
         if(usuarioDTO == null){
-            resultado.setMensaje("No se puede guardar el usuario");
+            resultadoDTO.setMensaje("No se puede guardar el usuario");
             return resultadoDTO;
         }
 
-        Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
+        Usuario usuario = new Usuario();
 
         usuarioRepository.save(usuario);
 

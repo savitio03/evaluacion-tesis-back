@@ -1,4 +1,4 @@
-package compartidos;
+package com.unisinu.evaluaciontesis.compartidos;
 
 import lombok.*;
 

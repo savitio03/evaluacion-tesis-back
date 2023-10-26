@@ -1,10 +1,10 @@
-package usuarios.controllers;
+package com.unisinu.evaluaciontesis.usuarios.controllers;
 
-import compartidos.ResultadoDTO;
+import com.unisinu.evaluaciontesis.compartidos.ResultadoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import usuarios.models.dto.UsuarioDTO;
-import usuarios.services.IUsuarioService;
+import com.unisinu.evaluaciontesis.usuarios.models.dto.UsuarioDTO;
+import com.unisinu.evaluaciontesis.usuarios.services.IUsuarioService;
 
 @CrossOrigin(origins = "http:localhost:4200")
 @RestController

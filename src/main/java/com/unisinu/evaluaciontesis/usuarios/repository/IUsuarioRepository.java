@@ -1,10 +1,10 @@
-package usuarios.repository;
+package com.unisinu.evaluaciontesis.usuarios.repository;
 
+import jakarta.inject.Singleton;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import usuarios.models.entidades.Usuario;
+import com.unisinu.evaluaciontesis.usuarios.models.entidades.Usuario;
 
-import javax.inject.Singleton;
 
 @Singleton
 @Repository

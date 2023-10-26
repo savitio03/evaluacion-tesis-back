@@ -1,6 +1,6 @@
-package usuarios.models.entidades;
+package com.unisinu.evaluaciontesis.usuarios.models.entidades;
 
-import compartidos.RolUsuarioEnum;
+import com.unisinu.evaluaciontesis.compartidos.RolUsuarioEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
