@@ -1,6 +1,9 @@
 package com.unisinu.evaluaciontesis.usuarios.models.entidades;
 
+import com.unisinu.evaluaciontesis.compartidos.ProgramaEnum;
 import com.unisinu.evaluaciontesis.compartidos.RolUsuarioEnum;
+import com.unisinu.evaluaciontesis.compartidos.SexoEnum;
+import com.unisinu.evaluaciontesis.compartidos.TipoIdentificacionEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,6 +40,17 @@ public class Usuario {
     @Column(name = "EVA_COLUMN_CODIGOCARNET")
     private String codigoCarnet;
 
+    @Column(name = "EVA_COLUMN_TIPOIDENTIFICACIONENUM")
+    @Enumerated(EnumType.STRING)
+    private TipoIdentificacionEnum tipoIdentificacionEnum;
+
+    @Column(name = "EVA_COLUMN_NUMEROIDENTIFICACION")
+    private String numeroIdenticacion;
+
+    @Column(name = "EVA_COLUMN_SEXOENUM")
+    @Enumerated(EnumType.STRING)
+    private SexoEnum sexoEnum;
+
     @Column(name = "EVA_COLUMN_ROL")
     @Enumerated(EnumType.STRING)
     private RolUsuarioEnum rol;
@@ -49,6 +63,10 @@ public class Usuario {
 
     @Column(name = "EVA_COLUMN_PASSWORD")
     private String password;
+
+    @Column(name = "EVA_COLUMN_PROGRAMAENUM")
+    @Enumerated(EnumType.STRING)
+    private ProgramaEnum programaEnum;
 
     @Column(name = "EVA_COLUMN_FECHACREACION")
     private LocalDateTime fechaCreacion;
