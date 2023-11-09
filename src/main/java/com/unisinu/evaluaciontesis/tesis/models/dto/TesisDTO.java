@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 
@@ -19,7 +20,8 @@ public class TesisDTO {
     private Long idTesis;
     private String nombre;
     private String descripcion;
-    private Byte documento;
+    private MultipartFile archivo;
+    private byte[] documento;
     private UsuarioDTO estudiante;
     private ProgramaEnum programaEnum;
     private String observaciones;

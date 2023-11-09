@@ -55,5 +55,8 @@ public class Tesis {
     @Enumerated(EnumType.STRING)
     private EstadoTesisEnum estadoTesisEnum;
 
+    @Lob
+    @Column(name = "EVA_COLUMN_DOCUMENTO")
+    private byte[] documento;
 
 }

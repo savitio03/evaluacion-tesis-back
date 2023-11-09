@@ -11,6 +11,7 @@ import com.unisinu.evaluaciontesis.usuarios.models.mappers.UsuarioMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,6 +41,16 @@ public class TesisService implements ITesisService {
         }
 
         Tesis tesis = tesisMapper.toEntity(tesisDTO);
+        try {
+            if (tesisDTO.getArchivo() == null) {
+                resultadoDTO.setMensajeError("El documento de la tesis no puede ser nulo");
+                return resultadoDTO;
+            }
+
+            tesis.setDocumento(tesisDTO.getArchivo().getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         tesisRepository.save(tesis);
 
