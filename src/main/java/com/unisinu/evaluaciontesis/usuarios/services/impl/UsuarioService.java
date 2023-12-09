@@ -54,7 +54,7 @@ public class UsuarioService implements IUsuarioService {
         UsuarioOutDTO usuarioOutDTO = new UsuarioOutDTO();
         usuarioOutDTO.setExitoso(Boolean.FALSE);
 
-        Optional<Usuario> usuario = usuarioRepository.findById(usuarioDTO.getIdUsuario());
+        Optional<Usuario> usuario = usuarioRepository.findByCorreoAndPassword(usuarioDTO.getCorreo(), usuarioDTO.getPassword());
 
         if (usuario.isEmpty()) {
             usuarioOutDTO.setMensaje("El usuario no existe");

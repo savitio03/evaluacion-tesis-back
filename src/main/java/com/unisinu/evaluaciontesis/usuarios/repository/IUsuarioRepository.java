@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Singleton
@@ -28,4 +29,7 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
             String tipoIdentificacion);
 
 
+    Optional<Usuario> findByCodigoCarnet(String codigoCarnet);
+
+    Optional<Usuario> findByCorreoAndPassword(String correo, String contrasena);
 }

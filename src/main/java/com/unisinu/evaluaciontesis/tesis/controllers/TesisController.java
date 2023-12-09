@@ -1,5 +1,6 @@
 package com.unisinu.evaluaciontesis.tesis.controllers;
 
+import com.unisinu.evaluaciontesis.compartidos.ProgramaEnum;
 import com.unisinu.evaluaciontesis.compartidos.ResultadoDTO;
 import com.unisinu.evaluaciontesis.tesis.models.dto.TesisDTO;
 import com.unisinu.evaluaciontesis.tesis.models.dto.TesisOutDTO;
@@ -25,24 +26,28 @@ public class TesisController {
         return tesisService.evaluarTesis(tesisDTO);
     }
 
-    @PostMapping("consultarTesis")
-    public TesisOutDTO consultarTesis(@RequestBody TesisDTO tesisDTO) {
-        return tesisService.consultarTesis(tesisDTO);
+    @GetMapping("consultarTesis")
+    public TesisOutDTO consultarTesis() {
+        return tesisService.consultarTesis();
     }
 
+    @GetMapping("consultarDetalleTesis")
+    public TesisOutDTO consultarDetalleTesis(@RequestParam Long idTesis) {
+        return tesisService.consultarDetalleTesis(idTesis);
+    }
     @PostMapping("consultarTesisPrograma")
-    public TesisOutDTO consultarTesisPrograma(@RequestBody TesisDTO tesisDTO) {
-        return tesisService.consultarTesisPrograma(tesisDTO);
+    public TesisOutDTO consultarTesisPrograma(@RequestParam ProgramaEnum programaEnum) {
+        return tesisService.consultarTesisPrograma(programaEnum);
     }
 
-    @PostMapping("consultarTesisEvaluador")
-    public TesisOutDTO consultarTesisEvaluador(@RequestBody TesisDTO tesisDTO) {
-        return tesisService.consultarTesisEvaluador(tesisDTO);
+    @GetMapping("consultarTesisEvaluador")
+    public TesisOutDTO consultarTesisEvaluador(@RequestParam Long idEvaluador) {
+        return tesisService.consultarTesisEvaluador(idEvaluador);
     }
 
-    @PostMapping("consultarTesisEstudiante")
-    public TesisOutDTO consultarTesisEstudiante(@RequestBody TesisDTO tesisDTO) {
-        return tesisService.consultarTesisEstudiante(tesisDTO);
+    @GetMapping("consultarTesisEstudiante")
+    public TesisOutDTO consultarTesisEstudiante(@RequestParam Long idEstudiante) {
+        return tesisService.consultarTesisEstudiante(idEstudiante);
     }
 
 }

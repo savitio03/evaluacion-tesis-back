@@ -31,7 +31,7 @@ public class Tesis {
     private String descripcion;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "EVA_COLUMN_USUARIO")
+    @JoinColumn(name = "EVA_COLUMN_ESTUDIANTE_ID", referencedColumnName = "EVA_COLUMN_IDUSUARIO")
     private Usuario estudiante;
 
     @Column(name = "EVA_COLUMN_PROGRAMAENUM")
@@ -48,7 +48,7 @@ public class Tesis {
     private Boolean calificada;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "EVA_COLUMN_USUARIO")
+    @JoinColumn(name = "EVA_COLUMN_EVALUADOR_ID", referencedColumnName = "EVA_COLUMN_IDUSUARIO")
     private Usuario evaluador;
 
     @Column(name = "EVA_COLUMN_ESTADO")
@@ -58,5 +58,9 @@ public class Tesis {
     @Lob
     @Column(name = "EVA_COLUMN_DOCUMENTO")
     private byte[] documento;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "EVA_COLUMN_ESTUDIANTE2_ID", referencedColumnName = "EVA_COLUMN_IDUSUARIO")
+    private Usuario estudiante2;
 
 }

@@ -29,4 +29,5 @@ public class TesisDTO {
     private Boolean calificada;
     private UsuarioDTO evaluador;
     private EstadoTesisEnum estadoTesisEnum;
+    private UsuarioDTO estudiante2;
 }
