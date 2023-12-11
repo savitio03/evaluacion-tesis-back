@@ -32,4 +32,5 @@ public class UsuarioDTO {
     private String password;
     private ProgramaEnum programaEnum;
     private LocalDateTime fechaCreacion;
+    private String nombreCompleto;
 }
