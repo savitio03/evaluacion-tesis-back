@@ -1,7 +1,7 @@
 package com.unisinu.evaluaciontesis.tesis.repository;
 
-import com.unisinu.evaluaciontesis.compartidos.ProgramaEnum;
 import com.unisinu.evaluaciontesis.tesis.models.entidades.Tesis;
+import com.unisinu.evaluaciontesis.tesis.models.entidades.TesisEstudiante;
 import com.unisinu.evaluaciontesis.usuarios.models.entidades.Usuario;
 import jakarta.inject.Singleton;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,9 +9,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
 @Singleton
 @Repository
-public interface ITesisRepository extends JpaRepository<Tesis, Long> {
-    List<Tesis> findAllByProgramaEnum(ProgramaEnum programaEnum);
+public interface ITesisEstudianteRepository extends JpaRepository<TesisEstudiante, Long> {
+
+    List<TesisEstudiante> findAllByEstudiante(Usuario estudiante);
+
+    List<TesisEstudiante> findAllByTesis(Tesis tesis);
+    List<TesisEstudiante> findAllByTesisIn(List<Tesis> listaTesis);
 }

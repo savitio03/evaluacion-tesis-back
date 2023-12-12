@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import com.unisinu.evaluaciontesis.usuarios.services.IUsuarioService;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -42,7 +44,7 @@ public class UsuarioService implements IUsuarioService {
         }
 
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
-
+        usuario.setFechaCreacion(LocalDateTime.now());
         usuarioRepository.save(usuario);
 
         resultadoDTO.setExitoso(Boolean.TRUE);

@@ -6,7 +6,9 @@ import com.unisinu.evaluaciontesis.tesis.models.dto.TesisDTO;
 import com.unisinu.evaluaciontesis.tesis.models.dto.TesisOutDTO;
 import com.unisinu.evaluaciontesis.tesis.services.ITesisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin(origins = "http:localhost:4200")
 @RestController
@@ -16,9 +18,10 @@ public class TesisController {
     @Autowired
     private ITesisService tesisService;
 
-    @PostMapping("guardarTesis")
-    public ResultadoDTO guardarTesis(@RequestBody TesisDTO tesisDTO) {
-        return tesisService.guardarTesis(tesisDTO);
+    @PostMapping(value = "guardarTesis", consumes = MediaType.ALL_VALUE)
+    public ResultadoDTO guardarTesis(@RequestPart("tesisDTO") TesisDTO tesisDTO,
+                                     @RequestPart("archivo") MultipartFile archivo) {
+        return tesisService.guardarTesis(tesisDTO, archivo);
     }
 
     @PostMapping("evaluarTesis")
@@ -35,14 +38,10 @@ public class TesisController {
     public TesisOutDTO consultarDetalleTesis(@RequestParam Long idTesis) {
         return tesisService.consultarDetalleTesis(idTesis);
     }
-    @PostMapping("consultarTesisPrograma")
+
+    @GetMapping("consultarTesisPrograma")
     public TesisOutDTO consultarTesisPrograma(@RequestParam ProgramaEnum programaEnum) {
         return tesisService.consultarTesisPrograma(programaEnum);
-    }
-
-    @GetMapping("consultarTesisEvaluador")
-    public TesisOutDTO consultarTesisEvaluador(@RequestParam Long idEvaluador) {
-        return tesisService.consultarTesisEvaluador(idEvaluador);
     }
 
     @GetMapping("consultarTesisEstudiante")

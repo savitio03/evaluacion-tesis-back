@@ -18,4 +18,5 @@ public class TesisOutDTO extends ResultadoDTO {
     private TesisDTO tesisDTO;
     private List<TesisDTO> listaTesisDTO;
     private Long totalTesis;
+    private List<TesisEstudianteDTO> tesisEstudianteDTO;
 }

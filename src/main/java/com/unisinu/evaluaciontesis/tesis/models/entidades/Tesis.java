@@ -1,8 +1,8 @@
 package com.unisinu.evaluaciontesis.tesis.models.entidades;
 
 import com.unisinu.evaluaciontesis.compartidos.ProgramaEnum;
+import com.unisinu.evaluaciontesis.tesis.models.enums.CalificadaEnum;
 import com.unisinu.evaluaciontesis.tesis.models.enums.EstadoTesisEnum;
-import com.unisinu.evaluaciontesis.usuarios.models.entidades.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "EVA_TESIS")
@@ -30,10 +31,6 @@ public class Tesis {
     @Column(name = "EVA_COLUMN_DESCRIPCION")
     private String descripcion;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "EVA_COLUMN_ESTUDIANTE_ID", referencedColumnName = "EVA_COLUMN_IDUSUARIO")
-    private Usuario estudiante;
-
     @Column(name = "EVA_COLUMN_PROGRAMAENUM")
     @Enumerated(EnumType.STRING)
     private ProgramaEnum programaEnum;
@@ -45,11 +42,8 @@ public class Tesis {
     private BigDecimal calificacion;
 
     @Column(name = "EVA_COLUMN_CALIFICADA")
-    private Boolean calificada;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "EVA_COLUMN_EVALUADOR_ID", referencedColumnName = "EVA_COLUMN_IDUSUARIO")
-    private Usuario evaluador;
+    @Enumerated(EnumType.STRING)
+    private CalificadaEnum calificada;
 
     @Column(name = "EVA_COLUMN_ESTADO")
     @Enumerated(EnumType.STRING)
@@ -59,8 +53,7 @@ public class Tesis {
     @Column(name = "EVA_COLUMN_DOCUMENTO")
     private byte[] documento;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "EVA_COLUMN_ESTUDIANTE2_ID", referencedColumnName = "EVA_COLUMN_IDUSUARIO")
-    private Usuario estudiante2;
+    @Column(name = "EVA_COLUMN_FECHACREACION")
+    private LocalDateTime fechaCreacion;
 
 }
