@@ -33,4 +33,5 @@ public class TesisDTO {
     private EstadoTesisEnum estadoTesisEnum;
     private UsuarioDTO estudiante2;
     private LocalDateTime fechaCreacion;
+    private String extension;
 }

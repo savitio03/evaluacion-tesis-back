@@ -31,10 +31,24 @@ public class UsuarioController {
         return usuarioService.consultarUsuarios(filtroConsultaUsuariosDTO);
     }
 
+    @GetMapping("consultarUsuariosPorAprobar")
+    public UsuarioOutDTO consultarUsuariosPorAprobar() {
+        return usuarioService.consultarUsuariosPorAprobar();
+    }
+
     @PostMapping("actualizarUsuario")
-    public ResultadoDTO actualizarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
+    public ResultadoDTO actualizarUsuario(@RequestParam UsuarioDTO usuarioDTO) {
         return usuarioService.actualizarUsuario(usuarioDTO);
     }
 
+    @GetMapping("aprobarUsuario")
+    public ResultadoDTO aprobarUsuario(@RequestParam Long idUsuario) {
+        return usuarioService.aprobarUsuario(idUsuario);
+    }
+
+    @GetMapping("rechazarUsuario")
+    public ResultadoDTO rechazarUsuario(@RequestParam Long idUsuario) {
+        return usuarioService.rechazarUsuario(idUsuario);
+    }
 
 }

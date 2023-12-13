@@ -1,6 +1,5 @@
 package com.unisinu.evaluaciontesis.tesis.models.dto;
 
-import com.unisinu.evaluaciontesis.tesis.models.entidades.Tesis;
 import com.unisinu.evaluaciontesis.usuarios.models.dto.UsuarioDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TesisEstudianteDTO {
     private Long idTesisEstudiante;
-    private Tesis tesis;
-    private UsuarioDTO estudiante;
+    private TesisDTO tesisDTOEstudiante;
+    private UsuarioDTO usuarioDTOEstudiante;
 
 }

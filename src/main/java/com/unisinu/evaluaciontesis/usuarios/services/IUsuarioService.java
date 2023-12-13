@@ -15,4 +15,9 @@ public interface IUsuarioService {
 
     ResultadoDTO actualizarUsuario(UsuarioDTO usuarioDTO);
 
+    UsuarioOutDTO consultarUsuariosPorAprobar();
+
+    ResultadoDTO aprobarUsuario(Long idUsuario);
+
+    ResultadoDTO rechazarUsuario(Long idUsuario);
 }

@@ -23,10 +23,10 @@ public class TesisEstudiante {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "EVA_COLUMN_TESIS", referencedColumnName = "EVA_COLUMN_IDTESIS")
-    private Tesis tesis;
+    private Tesis tesisDTOEstudiante;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "EVA_COLUMN_ESTUDIANTE", referencedColumnName = "EVA_COLUMN_IDUSUARIO")
-    private Usuario estudiante;
+    private Usuario usuarioDTOEstudiante;
 
 }

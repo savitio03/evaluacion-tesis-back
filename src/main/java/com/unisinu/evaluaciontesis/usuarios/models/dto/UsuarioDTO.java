@@ -1,9 +1,6 @@
 package com.unisinu.evaluaciontesis.usuarios.models.dto;
 
-import com.unisinu.evaluaciontesis.compartidos.ProgramaEnum;
-import com.unisinu.evaluaciontesis.compartidos.RolUsuarioEnum;
-import com.unisinu.evaluaciontesis.compartidos.SexoEnum;
-import com.unisinu.evaluaciontesis.compartidos.TipoIdentificacionEnum;
+import com.unisinu.evaluaciontesis.compartidos.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,4 +30,5 @@ public class UsuarioDTO {
     private ProgramaEnum programaEnum;
     private LocalDateTime fechaCreacion;
     private String nombreCompleto;
+    private EstadoCuentaEnum estadoCuentaEnum;
 }

@@ -1,9 +1,6 @@
 package com.unisinu.evaluaciontesis.usuarios.models.entidades;
 
-import com.unisinu.evaluaciontesis.compartidos.ProgramaEnum;
-import com.unisinu.evaluaciontesis.compartidos.RolUsuarioEnum;
-import com.unisinu.evaluaciontesis.compartidos.SexoEnum;
-import com.unisinu.evaluaciontesis.compartidos.TipoIdentificacionEnum;
+import com.unisinu.evaluaciontesis.compartidos.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -70,4 +67,8 @@ public class Usuario {
 
     @Column(name = "EVA_COLUMN_FECHACREACION")
     private LocalDateTime fechaCreacion;
+
+    @Column(name = "EVA_COLUMN_ESTADO_CUENTA")
+    @Enumerated(EnumType.STRING)
+    private EstadoCuentaEnum estadoCuentaEnum;
 }

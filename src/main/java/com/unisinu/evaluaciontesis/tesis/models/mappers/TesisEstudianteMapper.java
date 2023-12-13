@@ -4,6 +4,7 @@ import com.unisinu.evaluaciontesis.tesis.models.dto.TesisDTO;
 import com.unisinu.evaluaciontesis.tesis.models.dto.TesisEstudianteDTO;
 import com.unisinu.evaluaciontesis.tesis.models.entidades.Tesis;
 import com.unisinu.evaluaciontesis.tesis.models.entidades.TesisEstudiante;
+import org.mapstruct.Mapping;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

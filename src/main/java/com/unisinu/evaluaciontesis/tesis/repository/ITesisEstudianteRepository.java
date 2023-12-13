@@ -13,8 +13,8 @@ import java.util.List;
 @Repository
 public interface ITesisEstudianteRepository extends JpaRepository<TesisEstudiante, Long> {
 
-    List<TesisEstudiante> findAllByEstudiante(Usuario estudiante);
+    List<TesisEstudiante> findAllByUsuarioDTOEstudiante(Usuario estudiante);
 
-    List<TesisEstudiante> findAllByTesis(Tesis tesis);
-    List<TesisEstudiante> findAllByTesisIn(List<Tesis> listaTesis);
+    List<TesisEstudiante> findAllByTesisDTOEstudiante(Tesis tesis);
+    List<TesisEstudiante> findAllByTesisDTOEstudianteIn(List<Tesis> listaTesis);
 }

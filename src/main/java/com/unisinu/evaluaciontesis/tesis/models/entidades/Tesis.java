@@ -56,4 +56,7 @@ public class Tesis {
     @Column(name = "EVA_COLUMN_FECHACREACION")
     private LocalDateTime fechaCreacion;
 
+    @Column(name = "EVA_COLUMN_EXTENSION")
+    private String extension;
+
 }

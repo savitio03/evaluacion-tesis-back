@@ -1,5 +1,6 @@
 package com.unisinu.evaluaciontesis.usuarios.services.impl;
 
+import com.unisinu.evaluaciontesis.compartidos.EstadoCuentaEnum;
 import com.unisinu.evaluaciontesis.compartidos.ResultadoDTO;
 import com.unisinu.evaluaciontesis.usuarios.models.dto.FiltroConsultaUsuariosDTO;
 import com.unisinu.evaluaciontesis.usuarios.models.dto.UsuarioDTO;
@@ -13,6 +14,7 @@ import com.unisinu.evaluaciontesis.usuarios.services.IUsuarioService;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +45,7 @@ public class UsuarioService implements IUsuarioService {
             return resultadoDTO;
         }
 
+        usuarioDTO.setEstadoCuentaEnum(EstadoCuentaEnum.PENDIENTE);
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
         usuario.setFechaCreacion(LocalDateTime.now());
         usuarioRepository.save(usuario);
@@ -63,6 +66,7 @@ public class UsuarioService implements IUsuarioService {
             return usuarioOutDTO;
         }
 
+        usuario.get().setPassword(null);
         usuarioOutDTO.setUsuarioDTO(usuarioMapper.toDTO(usuario.get()));
         usuarioOutDTO.setExitoso(Boolean.TRUE);
         return usuarioOutDTO;
@@ -128,6 +132,88 @@ public class UsuarioService implements IUsuarioService {
 
         resultadoDTO.setExitoso(Boolean.TRUE);
         resultadoDTO.setMensaje("El usuario se ha actualizado exitosamente");
+        return resultadoDTO;
+    }
+
+    @Override
+    public UsuarioOutDTO consultarUsuariosPorAprobar() {
+        UsuarioOutDTO usuarioOutDTO = new UsuarioOutDTO();
+        usuarioOutDTO.setExitoso(Boolean.FALSE);
+
+        List<Usuario> listaUsuarios = new ArrayList<>();
+
+        List<Usuario> listaUsuariosPendienes = usuarioRepository.findByEstadoCuentaEnum(EstadoCuentaEnum.PENDIENTE);
+        List<Usuario> listaUsuariosRechazados = usuarioRepository.findByEstadoCuentaEnum(EstadoCuentaEnum.RECHAZADO);
+
+        listaUsuarios.addAll(listaUsuariosPendienes);
+        listaUsuarios.addAll(listaUsuariosRechazados);
+
+        if(listaUsuarios.isEmpty()){
+            usuarioOutDTO.setMensaje("No se encontraron usuarios por aprobar");
+            return usuarioOutDTO;
+        }
+
+        List<UsuarioDTO> listaUsuarioDTO = listaUsuarios.stream().map(usuario -> usuarioMapper.toDTO(usuario)).collect(Collectors.toList());
+
+        for(UsuarioDTO usuarioDTO : listaUsuarioDTO){
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(usuarioDTO.getNombre());
+            if(usuarioDTO.getSegundoNombre() != null){
+                stringBuilder.append(" ");
+                stringBuilder.append(usuarioDTO.getSegundoNombre());
+            }
+            stringBuilder.append(" ");
+            stringBuilder.append(usuarioDTO.getApellido());
+            if(usuarioDTO.getSegundoApellido() != null){
+                stringBuilder.append(" ");
+                stringBuilder.append(usuarioDTO.getSegundoApellido());
+            }
+            usuarioDTO.setNombreCompleto(stringBuilder.toString());
+            usuarioDTO.setPassword(null);
+        }
+
+        usuarioOutDTO.setListaUsuarioDTO(listaUsuarioDTO);
+        usuarioOutDTO.setExitoso(Boolean.TRUE);
+        return usuarioOutDTO;
+    }
+
+    @Override
+    public ResultadoDTO aprobarUsuario(Long idUsuario) {
+        ResultadoDTO resultadoDTO = new ResultadoDTO();
+        resultadoDTO.setExitoso(Boolean.FALSE);
+
+        Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
+
+        if(usuario.isEmpty()){
+            resultadoDTO.setMensaje("El usuario no existe");
+            return resultadoDTO;
+        }
+
+        usuario.get().setEstadoCuentaEnum(EstadoCuentaEnum.APROBADO);
+        usuarioRepository.save(usuario.get());
+
+        resultadoDTO.setExitoso(Boolean.TRUE);
+        resultadoDTO.setMensaje("El usuario se ha aprobado exitosamente");
+        return resultadoDTO;
+    }
+
+    @Override
+    public ResultadoDTO rechazarUsuario(Long idUsuario) {
+        ResultadoDTO resultadoDTO = new ResultadoDTO();
+        resultadoDTO.setExitoso(Boolean.FALSE);
+
+        Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
+
+        if(usuario.isEmpty()){
+            resultadoDTO.setMensaje("El usuario no existe");
+            return resultadoDTO;
+        }
+
+        usuario.get().setEstadoCuentaEnum(EstadoCuentaEnum.RECHAZADO);
+        usuarioRepository.save(usuario.get());
+
+        resultadoDTO.setExitoso(Boolean.TRUE);
+        resultadoDTO.setMensaje("El usuario se ha rechazado exitosamente");
         return resultadoDTO;
     }
 

@@ -1,5 +1,6 @@
 package com.unisinu.evaluaciontesis.usuarios.repository;
 
+import com.unisinu.evaluaciontesis.compartidos.EstadoCuentaEnum;
 import com.unisinu.evaluaciontesis.usuarios.models.entidades.Usuario;
 import jakarta.inject.Singleton;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -32,4 +33,6 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
     Optional<Usuario> findByCodigoCarnet(String codigoCarnet);
 
     Optional<Usuario> findByCorreoAndPassword(String correo, String contrasena);
+
+    List<Usuario> findByEstadoCuentaEnum(EstadoCuentaEnum estadoCuentaEnum);
 }
