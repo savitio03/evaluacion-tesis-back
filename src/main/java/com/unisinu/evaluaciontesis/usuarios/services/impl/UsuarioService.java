@@ -45,6 +45,18 @@ public class UsuarioService implements IUsuarioService {
             return resultadoDTO;
         }
 
+        Usuario usuario2 = consultarUsuarioPorCodigoCarnet(usuarioDTO.getCodigoCarnet());
+        if(usuario2 != null){
+            resultadoDTO.setMensaje("Ya existe un usuario con el código de carnet: " + usuarioDTO.getCodigoCarnet());
+            return resultadoDTO;
+        }
+
+        Usuario usuario3 = consultarUsuarioPorCorreo(usuarioDTO.getCorreo());
+        if(usuario3 != null){
+            resultadoDTO.setMensaje("Ya existe un usuario con el correo: " + usuarioDTO.getCorreo());
+            return resultadoDTO;
+        }
+
         usuarioDTO.setEstadoCuentaEnum(EstadoCuentaEnum.PENDIENTE);
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
         usuario.setFechaCreacion(LocalDateTime.now());
@@ -53,6 +65,27 @@ public class UsuarioService implements IUsuarioService {
         resultadoDTO.setExitoso(Boolean.TRUE);
         return resultadoDTO;
     }
+
+    private Usuario consultarUsuarioPorCodigoCarnet(String codigoCarnet) {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByCodigoCarnet(codigoCarnet);
+
+        if (usuarioOptional.isEmpty()) {
+            return null;
+        }
+
+        return usuarioOptional.get();
+    }
+
+    private Usuario consultarUsuarioPorCorreo(String correo) {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByCorreo(correo);
+
+        if (usuarioOptional.isEmpty()) {
+            return null;
+        }
+
+        return usuarioOptional.get();
+    }
+
 
     @Override
     public UsuarioOutDTO consultarUsuario(UsuarioDTO usuarioDTO) {
