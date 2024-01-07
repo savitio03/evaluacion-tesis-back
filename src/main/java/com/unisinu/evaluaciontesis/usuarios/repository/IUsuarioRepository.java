@@ -34,8 +34,6 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Optional<Usuario> findByCorreo(String correo);
 
-    Optional<Usuario> findByCorreoAndPassword(String correo, String contrasena);
-
     List<Usuario> findByEstadoCuentaEnum(EstadoCuentaEnum estadoCuentaEnum);
 
 

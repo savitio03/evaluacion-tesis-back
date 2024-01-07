@@ -142,8 +142,10 @@ public class TesisService implements ITesisService {
             return resultadoDTO;
         }
 
-        tesisDTO.setCalificada(CalificadaEnum.CALIFICADA);
-        tesisRepository.save(tesisMapper.toEntity(tesisDTO));
+        tesisOptional.get().setCalificada(CalificadaEnum.CALIFICADA);
+        tesisOptional.get().setCalificacion(tesisDTO.getCalificacion());
+        tesisOptional.get().setObservaciones(tesisDTO.getObservaciones());
+        tesisRepository.save(tesisOptional.get());
 
         resultadoDTO.setExitoso(Boolean.TRUE);
         return resultadoDTO;

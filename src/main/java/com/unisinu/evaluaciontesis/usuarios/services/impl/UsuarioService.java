@@ -1,6 +1,7 @@
 package com.unisinu.evaluaciontesis.usuarios.services.impl;
 
 import com.unisinu.evaluaciontesis.compartidos.EstadoCuentaEnum;
+import com.unisinu.evaluaciontesis.compartidos.PasswordEncoder;
 import com.unisinu.evaluaciontesis.compartidos.ResultadoDTO;
 import com.unisinu.evaluaciontesis.usuarios.models.dto.FiltroConsultaUsuariosDTO;
 import com.unisinu.evaluaciontesis.usuarios.models.dto.UsuarioDTO;
@@ -29,6 +30,9 @@ public class UsuarioService implements IUsuarioService {
 
     @Autowired
     private UsuarioMapper usuarioMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public ResultadoDTO guardarUsuario(UsuarioDTO usuarioDTO) {
@@ -63,6 +67,9 @@ public class UsuarioService implements IUsuarioService {
         usuarioDTO.setEstadoCuentaEnum(EstadoCuentaEnum.PENDIENTE);
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
         usuario.setFechaCreacion(LocalDateTime.now());
+
+        usuario.setPassword(passwordEncoder.cifrarContrasena(usuario.getPassword()));
+
         usuarioRepository.save(usuario);
 
         resultadoDTO.setExitoso(Boolean.TRUE);
@@ -97,13 +104,18 @@ public class UsuarioService implements IUsuarioService {
 
         String correoMinuscula = usuarioDTO.getCorreo().toLowerCase();
         usuarioDTO.setCorreo(correoMinuscula);
-        Optional<Usuario> usuario = usuarioRepository.findByCorreoAndPassword(usuarioDTO.getCorreo(), usuarioDTO.getPassword());
+
+
+        Optional<Usuario> usuario = usuarioRepository.findByCorreo(usuarioDTO.getCorreo());
 
         if (usuario.isEmpty()) {
             usuarioOutDTO.setMensaje("El usuario no existe");
             return usuarioOutDTO;
         }
 
+        if (!passwordEncoder.compararContrasena(usuarioDTO.getPassword(), usuario.get().getPassword())) {
+            return usuarioOutDTO;
+        }
         usuario.get().setPassword(null);
         usuarioOutDTO.setUsuarioDTO(usuarioMapper.toDTO(usuario.get()));
         usuarioOutDTO.setExitoso(Boolean.TRUE);
