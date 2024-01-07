@@ -60,7 +60,7 @@ public class TesisService implements ITesisService {
 
         Usuario estudiante1 = consultarUsuarioPorCodigoCarnet(tesisDTO.getEstudiante().getCodigoCarnet());
         if (estudiante1 == null) {
-            resultadoDTO.setMensaje("El estudiante con carnet " + tesisDTO.getEstudiante().getCodigoCarnet() + " no existe");
+            resultadoDTO.setMensaje("El estudiante con carnet: " + tesisDTO.getEstudiante().getCodigoCarnet() + " no existe");
             return resultadoDTO;
         }
         estudiantes.add(estudiante1);
@@ -68,7 +68,7 @@ public class TesisService implements ITesisService {
         if (tesisDTO.getEstudiante2() != null) {
             Usuario estudiante2 = consultarUsuarioPorCodigoCarnet(tesisDTO.getEstudiante2().getCodigoCarnet());
             if (estudiante2 == null) {
-                resultadoDTO.setMensaje("El estudiante con carnet " + tesisDTO.getEstudiante2().getCodigoCarnet() + " no existe");
+                resultadoDTO.setMensaje("El estudiante con carnet: " + tesisDTO.getEstudiante2().getCodigoCarnet() + " no existe");
                 return resultadoDTO;
             }
             estudiantes.add(estudiante2);
@@ -77,7 +77,7 @@ public class TesisService implements ITesisService {
         String extesion = obtenerExtesionArchivo(archivo.getOriginalFilename());
 
         tesisDTO.setExtension(extesion);
-        tesisDTO.setCalificada(CalificadaEnum.NO_CALIFICADA);
+        tesisDTO.setCalificada(CalificadaEnum.SIN_CALIFICAR);
 
 
         Tesis tesis = tesisMapper.toEntity(tesisDTO);
@@ -175,8 +175,7 @@ public class TesisService implements ITesisService {
         TesisOutDTO tesisOutDTO = new TesisOutDTO();
         tesisOutDTO.setExitoso(Boolean.FALSE);
 
-        Tesis tesisBuscar = new Tesis();
-        tesisBuscar.setIdTesis(idTesis);
+        Tesis tesisBuscar = tesisRepository.findById(idTesis).orElse(null);
 
         List<TesisEstudiante> listaTesis = tesisEstudianteRepository.findAllByTesisDTOEstudiante(tesisBuscar);
 
@@ -205,6 +204,7 @@ public class TesisService implements ITesisService {
             tesisEstudianteDTO.getUsuarioDTOEstudiante().setNombreCompleto(nombreCompletoString);
         }
 
+        tesisOutDTO.setTesisDTO(tesisMapper.toDTO(tesisBuscar));
         tesisOutDTO.setTesisEstudianteDTO(listaTesisEstudianteDTO);
         tesisOutDTO.setExitoso(Boolean.TRUE);
 
@@ -220,33 +220,13 @@ public class TesisService implements ITesisService {
         List<Tesis> listaTesis = tesisRepository.findAllByProgramaEnum(programaEnum);
 
         if (listaTesis.isEmpty()) {
-            tesisOutDTO.setMensaje("no se ecnontrarron tesis de este programa ");
+            tesisOutDTO.setMensaje("no se encontrarron tesis de este programa ");
             return tesisOutDTO;
         }
 
-        List<TesisEstudiante> tesisEstudiantes = tesisEstudianteRepository.findAllByTesisDTOEstudianteIn(listaTesis);
+        List<TesisDTO> listaTesisDTO = listaTesis.stream().map(tesis -> tesisMapper.toDTO(tesis)).collect(Collectors.toList());
 
-        List<TesisEstudianteDTO> listaEstudiateTesisDTO = tesisEstudiantes.stream().map(tesis -> tesisEstudianteMapper.toDTO(tesis)).collect(Collectors.toList());
-
-        for (TesisEstudianteDTO tesisEstudianteDTO : listaEstudiateTesisDTO) {
-            tesisEstudianteDTO.getUsuarioDTOEstudiante().setPassword(null);
-
-            StringBuilder nombreCompleto = new StringBuilder();
-            nombreCompleto.append(tesisEstudianteDTO.getUsuarioDTOEstudiante().getNombre());
-
-            if (tesisEstudianteDTO.getUsuarioDTOEstudiante().getSegundoNombre() != null) {
-                nombreCompleto.append(" ").append(tesisEstudianteDTO.getUsuarioDTOEstudiante().getSegundoNombre());
-            }
-            nombreCompleto.append(" ").append(tesisEstudianteDTO.getUsuarioDTOEstudiante().getApellido());
-            if (tesisEstudianteDTO.getUsuarioDTOEstudiante().getSegundoApellido() != null) {
-                nombreCompleto.append(" ").append(tesisEstudianteDTO.getUsuarioDTOEstudiante().getSegundoApellido());
-            }
-            String nombreCompletoString = nombreCompleto.toString();
-
-            tesisEstudianteDTO.getUsuarioDTOEstudiante().setNombreCompleto(nombreCompletoString);
-        }
-
-        tesisOutDTO.setTesisEstudianteDTO(listaEstudiateTesisDTO);
+        tesisOutDTO.setListaTesisDTO(listaTesisDTO);
         tesisOutDTO.setExitoso(Boolean.TRUE);
         tesisOutDTO.setTotalTesis((long) listaTesis.size());
 

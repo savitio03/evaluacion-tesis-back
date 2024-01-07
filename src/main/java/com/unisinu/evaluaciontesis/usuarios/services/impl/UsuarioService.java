@@ -46,13 +46,16 @@ public class UsuarioService implements IUsuarioService {
         }
 
         Usuario usuario2 = consultarUsuarioPorCodigoCarnet(usuarioDTO.getCodigoCarnet());
-        if(usuario2 != null){
+        if (usuario2 != null) {
             resultadoDTO.setMensaje("Ya existe un usuario con el código de carnet: " + usuarioDTO.getCodigoCarnet());
             return resultadoDTO;
         }
 
+        String correoMinuscula = usuarioDTO.getCorreo().toLowerCase();
+
+        usuarioDTO.setCorreo(correoMinuscula);
         Usuario usuario3 = consultarUsuarioPorCorreo(usuarioDTO.getCorreo());
-        if(usuario3 != null){
+        if (usuario3 != null) {
             resultadoDTO.setMensaje("Ya existe un usuario con el correo: " + usuarioDTO.getCorreo());
             return resultadoDTO;
         }
@@ -92,6 +95,8 @@ public class UsuarioService implements IUsuarioService {
         UsuarioOutDTO usuarioOutDTO = new UsuarioOutDTO();
         usuarioOutDTO.setExitoso(Boolean.FALSE);
 
+        String correoMinuscula = usuarioDTO.getCorreo().toLowerCase();
+        usuarioDTO.setCorreo(correoMinuscula);
         Optional<Usuario> usuario = usuarioRepository.findByCorreoAndPassword(usuarioDTO.getCorreo(), usuarioDTO.getPassword());
 
         if (usuario.isEmpty()) {
@@ -181,23 +186,23 @@ public class UsuarioService implements IUsuarioService {
         listaUsuarios.addAll(listaUsuariosPendienes);
         listaUsuarios.addAll(listaUsuariosRechazados);
 
-        if(listaUsuarios.isEmpty()){
+        if (listaUsuarios.isEmpty()) {
             usuarioOutDTO.setMensaje("No se encontraron usuarios por aprobar");
             return usuarioOutDTO;
         }
 
         List<UsuarioDTO> listaUsuarioDTO = listaUsuarios.stream().map(usuario -> usuarioMapper.toDTO(usuario)).collect(Collectors.toList());
 
-        for(UsuarioDTO usuarioDTO : listaUsuarioDTO){
+        for (UsuarioDTO usuarioDTO : listaUsuarioDTO) {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(usuarioDTO.getNombre());
-            if(usuarioDTO.getSegundoNombre() != null){
+            if (usuarioDTO.getSegundoNombre() != null) {
                 stringBuilder.append(" ");
                 stringBuilder.append(usuarioDTO.getSegundoNombre());
             }
             stringBuilder.append(" ");
             stringBuilder.append(usuarioDTO.getApellido());
-            if(usuarioDTO.getSegundoApellido() != null){
+            if (usuarioDTO.getSegundoApellido() != null) {
                 stringBuilder.append(" ");
                 stringBuilder.append(usuarioDTO.getSegundoApellido());
             }
@@ -217,7 +222,7 @@ public class UsuarioService implements IUsuarioService {
 
         Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
 
-        if(usuario.isEmpty()){
+        if (usuario.isEmpty()) {
             resultadoDTO.setMensaje("El usuario no existe");
             return resultadoDTO;
         }
@@ -237,7 +242,7 @@ public class UsuarioService implements IUsuarioService {
 
         Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
 
-        if(usuario.isEmpty()){
+        if (usuario.isEmpty()) {
             resultadoDTO.setMensaje("El usuario no existe");
             return resultadoDTO;
         }
