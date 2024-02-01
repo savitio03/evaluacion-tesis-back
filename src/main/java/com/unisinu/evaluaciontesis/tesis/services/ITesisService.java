@@ -10,7 +10,7 @@ public interface ITesisService {
 
     ResultadoDTO guardarTesis(TesisDTO tesisDTO, MultipartFile archivo);
 
-    ResultadoDTO evaluarTesis(TesisDTO tesisDTO);
+    ResultadoDTO evaluarTesis(TesisDTO tesisDTO, MultipartFile archivo);
 
     TesisOutDTO consultarTesis();
 

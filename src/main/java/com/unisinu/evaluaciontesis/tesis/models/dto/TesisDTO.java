@@ -34,4 +34,6 @@ public class TesisDTO {
     private UsuarioDTO estudiante2;
     private LocalDateTime fechaCreacion;
     private String extension;
+    private byte[] documentoSoporte;
+    private String extensionDocumentoSoporte;
 }

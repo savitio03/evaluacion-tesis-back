@@ -24,9 +24,10 @@ public class TesisController {
         return tesisService.guardarTesis(tesisDTO, archivo);
     }
 
-    @PostMapping("evaluarTesis")
-    public ResultadoDTO evaluarTesis(@RequestBody TesisDTO tesisDTO) {
-        return tesisService.evaluarTesis(tesisDTO);
+    @PostMapping(value = "evaluarTesis", consumes = MediaType.ALL_VALUE)
+    public ResultadoDTO evaluarTesis(@RequestPart("tesisDTO") TesisDTO tesisDTO,
+                                     @RequestPart(value = "archivo", required = false) MultipartFile archivo) {
+        return tesisService.evaluarTesis(tesisDTO , archivo);
     }
 
     @GetMapping("consultarTesis")

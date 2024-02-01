@@ -126,7 +126,7 @@ public class TesisService implements ITesisService {
     }
 
     @Override
-    public ResultadoDTO evaluarTesis(TesisDTO tesisDTO) {
+    public ResultadoDTO evaluarTesis(TesisDTO tesisDTO, MultipartFile archivo) {
         ResultadoDTO resultadoDTO = new TesisOutDTO();
         resultadoDTO.setExitoso(Boolean.FALSE);
 
@@ -142,9 +142,20 @@ public class TesisService implements ITesisService {
             return resultadoDTO;
         }
 
+
+
         tesisOptional.get().setCalificada(CalificadaEnum.CALIFICADA);
         tesisOptional.get().setCalificacion(tesisDTO.getCalificacion());
         tesisOptional.get().setObservaciones(tesisDTO.getObservaciones());
+        try {
+            if(archivo != null && !archivo.isEmpty()){
+                String extesion = obtenerExtesionArchivo(archivo.getOriginalFilename());
+                tesisOptional.get().setDocumentoSoporte(archivo.getBytes());
+                tesisOptional.get().setExtensionDocumentoSoporte(extesion);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         tesisRepository.save(tesisOptional.get());
 
         resultadoDTO.setExitoso(Boolean.TRUE);

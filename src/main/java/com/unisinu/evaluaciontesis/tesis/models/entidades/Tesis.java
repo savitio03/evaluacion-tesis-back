@@ -59,4 +59,11 @@ public class Tesis {
     @Column(name = "EVA_COLUMN_EXTENSION")
     private String extension;
 
+    @Lob
+    @Column(name = "EVA_COLUMN_DOCUMENTO_SOPORTE")
+    private byte[] documentoSoporte;
+
+    @Column(name = "EVA_COLUMN_EXTENSION_DOCUMENTO_SOPORTE")
+    private String extensionDocumentoSoporte;
+
 }
